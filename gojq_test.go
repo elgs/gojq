@@ -50,6 +50,7 @@ func TestParseJsonArray(t *testing.T) {
 		{"[0].name", "elgs"},
 		{"[1].gender", "f"},
 		{"[2].skills.[1]", "Sleeping"},
+		{"[2].hello", nil},
 	}
 	var fail = []struct {
 		in string
@@ -95,6 +96,7 @@ func TestParseJsonObj(t *testing.T) {
 		{"name", "sam"},
 		{"gender", "m"},
 		{"skills.[1]", "Sleeping"},
+		{"hello.world", nil},
 	}
 	var fail = []struct {
 		in string

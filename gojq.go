@@ -43,7 +43,7 @@ func (this *JSONQL) Parse(exp string) (interface{}, error) {
 			case []interface{}:
 				{
 					if len(v) <= index {
-						return nil, errors.New("Index out of range.")
+						return nil, errors.New(fmt.Sprint(path, " index out of range."))
 					}
 					context = v[index]
 				}
@@ -55,7 +55,12 @@ func (this *JSONQL) Parse(exp string) (interface{}, error) {
 			// map
 			switch v := context.(type) {
 			case map[string]interface{}:
-				context = v[path]
+				if val, ok := v[path]; ok {
+					context = val
+				} else {
+					return nil, errors.New(fmt.Sprint(path, " does not exist."))
+				}
+
 			default:
 				return nil, errors.New(fmt.Sprint(path, " is not an object. ", v))
 			}
