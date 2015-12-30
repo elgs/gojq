@@ -1,6 +1,11 @@
 # gojq
 JSON query in Golang.
 
+## Install
+`go get -u github.com/elgs/gojq`
+
+## Query from JSON Object
+
 ```go
 package main
 
@@ -35,6 +40,8 @@ func main() {
 	fmt.Println(parser.Parse("pet"))        // <nil> <nil>
 }
 ```
+
+## Query from JSON Array
 
 ```go
 package main
