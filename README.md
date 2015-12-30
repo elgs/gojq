@@ -11,7 +11,6 @@ This library serves two purposes:
 
 
 ## Query from JSON Object
-
 ```go
 package main
 
@@ -48,7 +47,6 @@ func main() {
 ```
 
 ## Query from JSON Array
-
 ```go
 package main
 
