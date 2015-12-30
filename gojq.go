@@ -60,7 +60,6 @@ func (this *JQ) Parse(exp string) (interface{}, error) {
 				} else {
 					return nil, errors.New(fmt.Sprint(path, " does not exist."))
 				}
-
 			default:
 				return nil, errors.New(fmt.Sprint(path, " is not an object. ", v))
 			}

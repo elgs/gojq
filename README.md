@@ -101,3 +101,57 @@ func main() {
 	fmt.Println(parser.Parse("[2].pet"))        // <nil> <nil>
 }
 ```
+## Netsted Query
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/elgs/gojq"
+)
+
+var jsonArray = `
+[
+  {
+    "name": "elgs",
+    "gender": "m",
+    "skills": [
+      "Golang",
+      "Java",
+      "C"
+    ]
+  },
+  {
+    "name": "enny",
+    "gender": "f",
+    "skills": [
+      "IC",
+      "Electric design",
+      "Verification"
+    ]
+  },
+  {
+    "name": "sam",
+    "gender": "m",
+	"pet": null,
+    "skills": [
+      "Eating",
+      "Sleeping",
+      "Crawling"
+    ]
+  }
+]
+`
+
+func main() {
+	parser, err := gojq.NewStringQuery(jsonArray)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	samSkills, err := parser.Parse("[2].skills")
+	fmt.Println(samSkills, err) //[Eating Sleeping Crawling] <nil>
+	samSkillParser := gojq.NewQuery(samSkills)
+	fmt.Println(samSkillParser.Parse("[1]")) //Sleeping <nil>
+}
+```
