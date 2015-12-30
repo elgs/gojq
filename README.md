@@ -4,6 +4,12 @@ JSON query in Golang.
 ## Install
 `go get -u github.com/elgs/gojq`
 
+This library serves two purposes:
+
+* enables JSON expression evaluation
+* reduce the pain of type assertion parsing JSON 
+
+
 ## Query from JSON Object
 
 ```go
