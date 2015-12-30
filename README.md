@@ -9,6 +9,41 @@ import (
 	"github.com/elgs/gojq"
 )
 
+var jsonObj = `
+{
+  "name": "sam",
+  "gender": "m",
+  "pet": null,
+  "skills": [
+    "Eating",
+    "Sleeping",
+    "Crawling"
+  ]
+}
+`
+
+func main() {
+	parser, err := gojq.NewStringQuery(jsonObj)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(parser.Parse("name"))       // sam <nil>
+	fmt.Println(parser.Parse("gender"))     // m <nil>
+	fmt.Println(parser.Parse("skills.[1]")) // Sleeping <nil>
+	fmt.Println(parser.Parse("hello"))      // <nil> hello does not exist.
+	fmt.Println(parser.Parse("pet"))        // <nil> <nil>
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/elgs/gojq"
+)
+
 var jsonArray = `
 [
   {
