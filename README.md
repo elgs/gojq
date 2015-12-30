@@ -7,7 +7,7 @@ JSON query in Golang.
 This library serves two purposes:
 
 * enables JSON expression evaluation
-* reduce the pain of type assertion parsing JSON 
+* reduces the pain of type assertion parsing JSON 
 
 
 ## Query from JSON Object
