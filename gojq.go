@@ -9,24 +9,24 @@ import (
 	"strings"
 )
 
-type JSONQL struct {
+type JQ struct {
 	Data interface{}
 }
 
-func NewStringQuery(jsonString string) (*JSONQL, error) {
+func NewStringQuery(jsonString string) (*JQ, error) {
 	var data = new(interface{})
 	err := json.Unmarshal([]byte(jsonString), data)
 	if err != nil {
 		return nil, err
 	}
-	return &JSONQL{*data}, nil
+	return &JQ{*data}, nil
 }
 
-func NewQuery(jsonObject interface{}) *JSONQL {
-	return &JSONQL{Data: jsonObject}
+func NewQuery(jsonObject interface{}) *JQ {
+	return &JQ{Data: jsonObject}
 }
 
-func (this *JSONQL) Parse(exp string) (interface{}, error) {
+func (this *JQ) Parse(exp string) (interface{}, error) {
 	paths, err := gosplitargs.SplitArgs(exp, "\\.", false)
 	if err != nil {
 		return nil, err
