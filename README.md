@@ -38,11 +38,11 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(parser.Parse("name"))       // sam <nil>
-	fmt.Println(parser.Parse("gender"))     // m <nil>
-	fmt.Println(parser.Parse("skills.[1]")) // Sleeping <nil>
-	fmt.Println(parser.Parse("hello"))      // <nil> hello does not exist.
-	fmt.Println(parser.Parse("pet"))        // <nil> <nil>
+	fmt.Println(parser.Query("name"))       // sam <nil>
+	fmt.Println(parser.Query("gender"))     // m <nil>
+	fmt.Println(parser.Query("skills.[1]")) // Sleeping <nil>
+	fmt.Println(parser.Query("hello"))      // <nil> hello does not exist.
+	fmt.Println(parser.Query("pet"))        // <nil> <nil>
 }
 ```
 
@@ -94,11 +94,11 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(parser.Parse("[0].name"))       // elgs <nil>
-	fmt.Println(parser.Parse("[1].gender"))     // f <nil>
-	fmt.Println(parser.Parse("[2].skills.[1]")) // Sleeping <nil>
-	fmt.Println(parser.Parse("[2].hello"))      // <nil> hello does not exist.
-	fmt.Println(parser.Parse("[2].pet"))        // <nil> <nil>
+	fmt.Println(parser.Query("[0].name"))       // elgs <nil>
+	fmt.Println(parser.Query("[1].gender"))     // f <nil>
+	fmt.Println(parser.Query("[2].skills.[1]")) // Sleeping <nil>
+	fmt.Println(parser.Query("[2].hello"))      // <nil> hello does not exist.
+	fmt.Println(parser.Query("[2].pet"))        // <nil> <nil>
 }
 ```
 ## Netsted Query
@@ -149,9 +149,9 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	samSkills, err := parser.Parse("[2].skills")
+	samSkills, err := parser.Query("[2].skills")
 	fmt.Println(samSkills, err) //[Eating Sleeping Crawling] <nil>
 	samSkillParser := gojq.NewQuery(samSkills)
-	fmt.Println(samSkillParser.Parse("[1]")) //Sleeping <nil>
+	fmt.Println(samSkillParser.Query("[1]")) //Sleeping <nil>
 }
 ```

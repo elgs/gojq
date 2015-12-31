@@ -26,7 +26,7 @@ func NewQuery(jsonObject interface{}) *JQ {
 	return &JQ{Data: jsonObject}
 }
 
-func (this *JQ) Parse(exp string) (interface{}, error) {
+func (this *JQ) Query(exp string) (interface{}, error) {
 	paths, err := gosplitargs.SplitArgs(exp, "\\.", false)
 	if err != nil {
 		return nil, err

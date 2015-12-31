@@ -57,7 +57,7 @@ func TestParseJsonArray(t *testing.T) {
 		ex interface{}
 	}{}
 	for _, v := range pass {
-		result, err := parserArray.Parse(v.in)
+		result, err := parserArray.Query(v.in)
 		if err != nil {
 			t.Error(err)
 		}
@@ -103,7 +103,7 @@ func TestParseJsonObj(t *testing.T) {
 		ex interface{}
 	}{}
 	for _, v := range pass {
-		result, err := parserObj.Parse(v.in)
+		result, err := parserObj.Query(v.in)
 		if err != nil {
 			t.Error(err)
 		}
