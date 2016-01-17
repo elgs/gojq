@@ -65,7 +65,7 @@ func TestParseJsonArray(t *testing.T) {
 			t.Error("Expected:", v.ex, "actual:", result)
 		}
 	}
-	for _, _ = range fail {
+	for range fail {
 
 	}
 }
@@ -111,7 +111,7 @@ func TestParseJsonObj(t *testing.T) {
 			t.Error("Expected:", v.ex, "actual:", result)
 		}
 	}
-	for _, _ = range fail {
+	for range fail {
 
 	}
 }
