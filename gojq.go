@@ -9,10 +9,12 @@ import (
 	"strings"
 )
 
+// JQ (JSON Query) struct
 type JQ struct {
 	Data interface{}
 }
 
+// Create a new &JQ from a raw JSON string.
 func NewStringQuery(jsonString string) (*JQ, error) {
 	var data = new(interface{})
 	err := json.Unmarshal([]byte(jsonString), data)
@@ -22,10 +24,12 @@ func NewStringQuery(jsonString string) (*JQ, error) {
 	return &JQ{*data}, nil
 }
 
+// Create a &JQ from an interface{} parsed by json.Unmarshal
 func NewQuery(jsonObject interface{}) *JQ {
 	return &JQ{Data: jsonObject}
 }
 
+// Query against the JSON with the expression passed in. The exp is separated by dots (".")
 func (this *JQ) Query(exp string) (interface{}, error) {
 	paths, err := gosplitargs.SplitArgs(exp, "\\.", false)
 	if err != nil {
