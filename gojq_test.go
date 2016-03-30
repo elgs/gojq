@@ -31,7 +31,8 @@ var jsonArray = `
       "Eating",
       "Sleeping",
       "Crawling"
-    ]
+    ],
+	"hello": null
   }
 ]
 `
@@ -78,7 +79,8 @@ var jsonObj = `
     "Eating",
     "Sleeping",
     "Crawling"
-  ]
+  ],
+  "hello":null
 }
 `
 
@@ -96,7 +98,7 @@ func TestParseJsonObj(t *testing.T) {
 		{"name", "sam"},
 		{"gender", "m"},
 		{"skills.[1]", "Sleeping"},
-		{"hello.world", nil},
+		{"hello", nil},
 	}
 	var fail = []struct {
 		in string

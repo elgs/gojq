@@ -44,6 +44,7 @@ func main() {
 	fmt.Println(parser.Query("skills.[1]")) // Sleeping <nil>
 	fmt.Println(parser.Query("hello"))      // <nil> hello does not exist.
 	fmt.Println(parser.Query("pet"))        // <nil> <nil>
+	fmt.Println(parser.Query("."))          // map[name:sam gender:m pet:<nil> skills:[Eating Sleeping Crawling]] <nil>
 }
 ```
 

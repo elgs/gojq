@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/elgs/gosplitargs"
 	"strconv"
 	"strings"
+
+	"github.com/elgs/gosplitargs"
 )
 
 // JQ (JSON Query) struct
@@ -31,6 +32,9 @@ func NewQuery(jsonObject interface{}) *JQ {
 
 // Query queries against the JSON with the expression passed in. The exp is separated by dots (".")
 func (jq *JQ) Query(exp string) (interface{}, error) {
+	if exp == "." {
+		return jq.Data, nil
+	}
 	paths, err := gosplitargs.SplitArgs(exp, "\\.", false)
 	if err != nil {
 		return nil, err
