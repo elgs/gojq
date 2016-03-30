@@ -58,7 +58,6 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 			default:
 				return nil, errors.New(fmt.Sprint(path, " is not an array. ", v))
 			}
-
 		} else {
 			// map
 			switch v := context.(type) {
