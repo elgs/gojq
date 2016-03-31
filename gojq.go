@@ -49,12 +49,10 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 			}
 			switch v := context.(type) {
 			case []interface{}:
-				{
-					if len(v) <= index {
-						return nil, errors.New(fmt.Sprint(path, " index out of range."))
-					}
-					context = v[index]
+				if len(v) <= index {
+					return nil, errors.New(fmt.Sprint(path, " index out of range."))
 				}
+				context = v[index]
 			default:
 				return nil, errors.New(fmt.Sprint(path, " is not an array. ", v))
 			}
