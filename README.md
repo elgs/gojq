@@ -17,6 +17,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/elgs/gojq"
 )
 
@@ -29,7 +30,8 @@ var jsonObj = `
     "Eating",
     "Sleeping",
     "Crawling"
-  ]
+  ],
+  "hello.world":true
 }
 `
 
@@ -39,13 +41,15 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(parser.Query("name"))       // sam <nil>
-	fmt.Println(parser.Query("gender"))     // m <nil>
-	fmt.Println(parser.Query("skills.[1]")) // Sleeping <nil>
-	fmt.Println(parser.Query("hello"))      // <nil> hello does not exist.
-	fmt.Println(parser.Query("pet"))        // <nil> <nil>
-	fmt.Println(parser.Query("."))          // map[name:sam gender:m pet:<nil> skills:[Eating Sleeping Crawling]] <nil>
+	fmt.Println(parser.Query("name"))          // sam <nil>
+	fmt.Println(parser.Query("gender"))        // m <nil>
+	fmt.Println(parser.Query("skills.[1]"))    // Sleeping <nil>
+	fmt.Println(parser.Query("hello"))         // <nil> hello does not exist.
+	fmt.Println(parser.Query("pet"))           // <nil> <nil>
+	fmt.Println(parser.Query("."))             // map[name:sam gender:m pet:<nil> skills:[Eating Sleeping Crawling] hello.world:true] <nil>
+	fmt.Println(parser.Query("'hello.world'")) //true <nil>
 }
+
 ```
 
 ## Query from JSON Array
