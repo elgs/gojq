@@ -47,25 +47,23 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 			if err != nil {
 				return nil, err
 			}
-			switch v := context.(type) {
-			case []interface{}:
+			if v, ok := context.([]interface{}); ok {
 				if len(v) <= index {
 					return nil, errors.New(fmt.Sprint(path, " index out of range."))
 				}
 				context = v[index]
-			default:
+			} else {
 				return nil, errors.New(fmt.Sprint(path, " is not an array. ", v))
 			}
 		} else {
 			// map
-			switch v := context.(type) {
-			case map[string]interface{}:
+			if v, ok := context.(map[string]interface{}); ok {
 				if val, ok := v[path]; ok {
 					context = val
 				} else {
 					return nil, errors.New(fmt.Sprint(path, " does not exist."))
 				}
-			default:
+			} else {
 				return nil, errors.New(fmt.Sprint(path, " is not an object. ", v))
 			}
 		}
