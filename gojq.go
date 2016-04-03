@@ -70,3 +70,87 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 	}
 	return context, nil
 }
+
+// QueryToMap queries against the JSON with the expression passed in, and convert to a map[string]interface{}
+func (jq *JQ) QueryToMap(exp string) (map[string]interface{}, error) {
+	r, err := jq.Query(exp)
+	if err != nil {
+		return nil, errors.New("Failed to parse: " + exp)
+	}
+	if ret, ok := r.(map[string]interface{}); ok {
+		return ret, nil
+	}
+	return nil, errors.New("Failed to convert to map: " + exp)
+}
+
+// QueryToMap queries against the JSON with the expression passed in, and convert to a array: []interface{}
+func (jq *JQ) QueryToArray(exp string) ([]interface{}, error) {
+	r, err := jq.Query(exp)
+	if err != nil {
+		return nil, errors.New("Failed to parse: " + exp)
+	}
+	if ret, ok := r.([]interface{}); ok {
+		return ret, nil
+	}
+	return nil, errors.New("Failed to convert to array: " + exp)
+}
+
+// QueryToMap queries against the JSON with the expression passed in, and convert to a array of strings: []string
+func (jq *JQ) QueryToArrayOfStrings(exp string) ([]string, error) {
+	r, err := jq.Query(exp)
+	if err != nil {
+		return nil, errors.New("Failed to parse: " + exp)
+	}
+	if ret, ok := r.([]string); ok {
+		return ret, nil
+	}
+	return nil, errors.New("Failed to convert to array: " + exp)
+}
+
+// QueryToMap queries against the JSON with the expression passed in, and convert to string
+func (jq *JQ) QueryToString(exp string) (string, error) {
+	r, err := jq.Query(exp)
+	if err != nil {
+		return "", errors.New("Failed to parse: " + exp)
+	}
+	if ret, ok := r.(string); ok {
+		return ret, nil
+	}
+	return "", errors.New("Failed to convert to string: " + exp)
+}
+
+// QueryToMap queries against the JSON with the expression passed in, and convert to int64
+func (jq *JQ) QueryToInt64(exp string) (int64, error) {
+	r, err := jq.Query(exp)
+	if err != nil {
+		return 0, errors.New("Failed to parse: " + exp)
+	}
+	if ret, ok := r.(int64); ok {
+		return ret, nil
+	}
+	return 0, errors.New("Failed to convert to int64: " + exp)
+}
+
+// QueryToMap queries against the JSON with the expression passed in, and convert to float64
+func (jq *JQ) QueryToFloat64(exp string) (float64, error) {
+	r, err := jq.Query(exp)
+	if err != nil {
+		return 0, errors.New("Failed to parse: " + exp)
+	}
+	if ret, ok := r.(float64); ok {
+		return ret, nil
+	}
+	return 0, errors.New("Failed to convert to float64: " + exp)
+}
+
+// QueryToMap queries against the JSON with the expression passed in, and convert to bool
+func (jq *JQ) QueryToBool(exp string) (bool, error) {
+	r, err := jq.Query(exp)
+	if err != nil {
+		return false, errors.New("Failed to parse: " + exp)
+	}
+	if ret, ok := r.(bool); ok {
+		return ret, nil
+	}
+	return false, errors.New("Failed to convert to float64: " + exp)
+}
