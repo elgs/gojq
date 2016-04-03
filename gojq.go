@@ -95,18 +95,6 @@ func (jq *JQ) QueryToArray(exp string) ([]interface{}, error) {
 	return nil, errors.New("Failed to convert to array: " + exp)
 }
 
-// QueryToMap queries against the JSON with the expression passed in, and convert to a array of strings: []string
-func (jq *JQ) QueryToArrayOfStrings(exp string) ([]string, error) {
-	r, err := jq.Query(exp)
-	if err != nil {
-		return nil, errors.New("Failed to parse: " + exp)
-	}
-	if ret, ok := r.([]string); ok {
-		return ret, nil
-	}
-	return nil, errors.New("Failed to convert to array: " + exp)
-}
-
 // QueryToMap queries against the JSON with the expression passed in, and convert to string
 func (jq *JQ) QueryToString(exp string) (string, error) {
 	r, err := jq.Query(exp)
