@@ -113,8 +113,8 @@ func (jq *JQ) QueryToInt64(exp string) (int64, error) {
 	if err != nil {
 		return 0, errors.New("Failed to parse: " + exp)
 	}
-	if ret, ok := r.(int64); ok {
-		return ret, nil
+	if ret, ok := r.(float64); ok {
+		return int64(ret), nil
 	}
 	return 0, errors.New("Failed to convert to int64: " + exp)
 }
