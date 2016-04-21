@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"strconv"
 	"strings"
 
@@ -13,6 +14,20 @@ import (
 // JQ (JSON Query) struct
 type JQ struct {
 	Data interface{}
+}
+
+// NewFileQuery - Create a new &JQ from a JSON file.
+func NewFileQuery(jsonFile string) (*JQ, error) {
+	raw, err := ioutil.ReadFile(jsonFile)
+	if err != nil {
+		return nil, err
+	}
+	var data = new(interface{})
+	err = json.Unmarshal(raw, data)
+	if err != nil {
+		return nil, err
+	}
+	return &JQ{*data}, nil
 }
 
 // NewStringQuery - Create a new &JQ from a raw JSON string.
