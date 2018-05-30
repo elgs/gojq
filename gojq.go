@@ -45,6 +45,21 @@ func NewQuery(jsonObject interface{}) *JQ {
 	return &JQ{Data: jsonObject}
 }
 
+func (jq *JQ) getKey(context interface{}, path string) (interface{}, error) {
+	// map
+	if v, ok := context.(map[string]interface{}); ok {
+		if val, ok := v[path]; ok {
+			context = val
+		} else {
+			return context, errors.New(fmt.Sprint(path, " does not exist."))
+		}
+	} else {
+		return context, errors.New(fmt.Sprint(path, " is not an object. ", v))
+	}
+
+	return context, nil
+}
+
 // Query queries against the JSON with the expression passed in. The exp is separated by dots (".")
 func (jq *JQ) Query(exp string) (interface{}, error) {
 	if exp == "." {
@@ -71,6 +86,20 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 				return nil, errors.New(fmt.Sprint(path, " is not an array. ", v))
 			}
 		} else {
+			// array of maps
+			if v, ok := context.([]interface{}); ok {
+				newContext := []interface{}{}
+				for _, item := range v {
+					subItem, err := jq.getKey(item, path)
+					if err != nil {
+						return nil, err
+					}
+					newContext = append(newContext, subItem)
+				}
+				context = newContext
+				return context, nil
+			}
+
 			// map
 			if v, ok := context.(map[string]interface{}); ok {
 				if val, ok := v[path]; ok {
