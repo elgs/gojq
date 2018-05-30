@@ -73,6 +73,40 @@ func TestParseJsonArray(t *testing.T) {
 	}
 }
 
+func TestMapJsonArray(t *testing.T) {
+	parserArray, err := NewStringQuery(jsonArray)
+	if err != nil {
+		t.Error(err)
+	}
+
+	var pass = []struct {
+		in string
+		ex []interface{}
+	}{
+		{"name", []interface{}{"elgs", "enny", "sam"}},
+	}
+
+	for _, v := range pass {
+		result, err := parserArray.Query(v.in)
+		if err != nil {
+			t.Error(err)
+		}
+		if list, ok := result.([]interface{}); ok {
+			if len(list) != len(v.ex) {
+				t.Error("Expected:", v.ex, "actual:", result)
+			}
+			for i, expected := range v.ex {
+				output := list[i]
+				if expected != output {
+					t.Error("Expected:", v.ex, "actual:", result)
+				}
+			}
+		} else {
+			t.Error("Expected:", v.ex, "actual:", result)
+		}
+	}
+}
+
 var jsonObj = `
 {
   "name": "sam",
