@@ -107,7 +107,7 @@ func main() {
 	fmt.Println(parser.Query("[2].pet"))        // <nil> <nil>
 }
 ```
-## Netsted Query
+## Nested Query
 ```go
 package main
 
