@@ -13,7 +13,7 @@ import (
 
 // JQ (JSON Query) struct
 type JQ struct {
-	Data interface{}
+	Data any
 }
 
 // NewFileQuery - Create a new &JQ from a JSON file.
@@ -22,7 +22,7 @@ func NewFileQuery(jsonFile string) (*JQ, error) {
 	if err != nil {
 		return nil, err
 	}
-	var data = new(interface{})
+	var data = new(any)
 	err = json.Unmarshal(raw, data)
 	if err != nil {
 		return nil, err
@@ -32,7 +32,7 @@ func NewFileQuery(jsonFile string) (*JQ, error) {
 
 // NewStringQuery - Create a new &JQ from a raw JSON string.
 func NewStringQuery(jsonString string) (*JQ, error) {
-	var data = new(interface{})
+	var data = new(any)
 	err := json.Unmarshal([]byte(jsonString), data)
 	if err != nil {
 		return nil, err
@@ -40,21 +40,21 @@ func NewStringQuery(jsonString string) (*JQ, error) {
 	return &JQ{*data}, nil
 }
 
-// NewQuery - Create a &JQ from an interface{} parsed by json.Unmarshal
-func NewQuery(jsonObject interface{}) *JQ {
+// NewQuery - Create a &JQ from an any parsed by json.Unmarshal
+func NewQuery(jsonObject any) *JQ {
 	return &JQ{Data: jsonObject}
 }
 
 // Query queries against the JSON with the expression passed in. The exp is separated by dots (".")
-func (jq *JQ) Query(exp string) (interface{}, error) {
+func (jq *JQ) Query(exp string) (any, error) {
 	if exp == "." {
 		return jq.Data, nil
 	}
-	paths, err := gosplitargs.SplitArgs(exp, "\\.", false)
+	paths, err := gosplitargs.SplitArgs(exp, ".", false)
 	if err != nil {
 		return nil, err
 	}
-	var context interface{} = jq.Data
+	var context any = jq.Data
 	for _, path := range paths {
 		if len(path) >= 3 && strings.HasPrefix(path, "[") && strings.HasSuffix(path, "]") {
 			// array
@@ -62,7 +62,7 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 			if err != nil {
 				return nil, err
 			}
-			if v, ok := context.([]interface{}); ok {
+			if v, ok := context.([]any); ok {
 				if len(v) <= index {
 					return nil, errors.New(fmt.Sprint(path, " index out of range."))
 				}
@@ -72,7 +72,7 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 			}
 		} else {
 			// map
-			if v, ok := context.(map[string]interface{}); ok {
+			if v, ok := context.(map[string]any); ok {
 				if val, ok := v[path]; ok {
 					context = val
 				} else {
@@ -86,25 +86,25 @@ func (jq *JQ) Query(exp string) (interface{}, error) {
 	return context, nil
 }
 
-// QueryToMap queries against the JSON with the expression passed in, and convert to a map[string]interface{}
-func (jq *JQ) QueryToMap(exp string) (map[string]interface{}, error) {
+// QueryToMap queries against the JSON with the expression passed in, and convert to a map[string]any
+func (jq *JQ) QueryToMap(exp string) (map[string]any, error) {
 	r, err := jq.Query(exp)
 	if err != nil {
 		return nil, errors.New("Failed to parse: " + exp)
 	}
-	if ret, ok := r.(map[string]interface{}); ok {
+	if ret, ok := r.(map[string]any); ok {
 		return ret, nil
 	}
 	return nil, errors.New("Failed to convert to map: " + exp)
 }
 
-// QueryToMap queries against the JSON with the expression passed in, and convert to a array: []interface{}
-func (jq *JQ) QueryToArray(exp string) ([]interface{}, error) {
+// QueryToMap queries against the JSON with the expression passed in, and convert to a array: []any
+func (jq *JQ) QueryToArray(exp string) ([]any, error) {
 	r, err := jq.Query(exp)
 	if err != nil {
 		return nil, errors.New("Failed to parse: " + exp)
 	}
-	if ret, ok := r.([]interface{}); ok {
+	if ret, ok := r.([]any); ok {
 		return ret, nil
 	}
 	return nil, errors.New("Failed to convert to array: " + exp)
